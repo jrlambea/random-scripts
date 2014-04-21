@@ -17,12 +17,12 @@ fi
 
 if [ "$1" == "r" ]; then
 	echo "[+] Restore wifi mac"
-	svc wifi disable
+	ip link set ${IFACE} down
 	if [ -f /data/misc/wifi/WCNSS_qcom_cfg.ini.bkp ] && [ -f /data/misc/wifi/WCNSS_qcom_wlan_nv.bin.bkp ]; then
 		cp /data/misc/wifi/WCNSS_qcom_cfg.ini.bkp /data/misc/wifi/WCNSS_qcom_cfg.ini
 		cp /data/misc/wifi/WCNSS_qcom_wlan_nv.bin.bkp /data/misc/wifi/WCNSS_qcom_wlan_nv.bin
 	fi
-	svc wifi enable
+	ip link set ${IFACE} up
 	echo "[+] done."
 	exit 0
 fi
@@ -109,13 +109,13 @@ for o in $loop ; do
 		echo "- ${mac}"
 
 		echo "[+] disable wifi"
-		svc wifi disable
+		ip link set ${IFACE} downs
 		sleep 4
 		echo "[+] change mac"
 		changemac ${mac}
 		sleep 1
 		echo "[+] enable wifi"
-		svc wifi enable
+		ip link set ${IFACE} up
 		sleep 9
 
 		echo "[+] flush dev"
