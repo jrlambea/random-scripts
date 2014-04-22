@@ -109,7 +109,7 @@ for o in $loop ; do
 		echo "- ${mac}"
 
 		echo "[+] disable wifi"
-		ip link set ${IFACE} downs
+		ip link set ${IFACE} down
 		sleep 4
 		echo "[+] change mac"
 		changemac ${mac}
